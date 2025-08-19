@@ -1,0 +1,299 @@
+# beka-ai
+Ai beka
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Бека AI — умный помощник + услуги — 2000 ₸</title>
+<meta name="description" content="Бека AI — мощный чат-ассистент и сервис по настройке Wi-Fi, роутеров и сайтам. Цена 2000 ₸. Тел: +7 775 502 6706" />
+<style>
+  /* --- компактный стиль: современный, адаптивный --- */
+  :root{
+    --bg:#071025; --card:#0b1220; --accent1:#2DD4BF; --accent2:#60A5FA; --muted:#94a3b8;
+    --glass:rgba(255,255,255,0.03); --r:12px; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;
+  }
+  *{box-sizing:border-box} body{margin:0;background:linear-gradient(180deg,#071025,#0b1220);color:#eaf4fb}
+  .container{max-width:980px;margin:20px auto;padding:16px}
+  header{display:flex;gap:12px;align-items:center;justify-content:space-between}
+  .brand{display:flex;gap:12px;align-items:center}
+  .logo{width:64px;height:64px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--accent1),var(--accent2));box-shadow:0 8px 30px rgba(2,6,23,0.6)}
+  .logo svg{width:44px;height:44px}
+  h1{margin:0;font-size:18px}
+  p.sub{margin:0;color:var(--muted);font-size:13px}
+  .actions{display:flex;gap:8px}
+  .btn{padding:8px 12px;border-radius:10px;background:rgba(255,255,255,0.02);color:var(--accent1);text-decoration:none;font-weight:700;border:1px solid rgba(255,255,255,0.03)}
+  main{margin-top:18px;display:grid;grid-template-columns:1fr 360px;gap:14px}
+  .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.02)}
+  .service-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-top:12px}
+  /* CHAT WIDGET inside page (not fixed) */
+  .chat-wrap{display:flex;flex-direction:column;height:620px}
+  .chat-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+  .chat-body{flex:1;overflow:auto;padding:10px;display:flex;flex-direction:column;gap:8px;border-radius:8px;background:linear-gradient(180deg,rgba(255,255,255,0.01),transparent);border:1px solid rgba(255,255,255,0.02)}
+  .msg{max-width:80%;padding:8px 10px;border-radius:10px;font-size:14px;white-space:pre-wrap}
+  .user{align-self:flex-end;background:linear-gradient(90deg,rgba(96,165,250,0.12),rgba(45,212,191,0.06));color:#02111a}
+  .assistant{align-self:flex-start;background:rgba(255,255,255,0.02);color:var(--muted)}
+  .chat-controls{display:flex;gap:8px;margin-top:8px}
+  textarea{width:100%;min-height:62px;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit;resize:vertical}
+  select,input{padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit}
+  .small{font-size:13px;color:var(--muted)}
+  footer{margin-top:18px;padding:12px;border-radius:10px;background:rgba(255,255,255,0.01);display:flex;justify-content:space-between;align-items:center;color:var(--muted)}
+  @media(max-width:980px){ main{grid-template-columns:1fr} .chat-wrap{height:420px} }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="brand">
+      <div class="logo" aria-hidden="true">
+        <!-- SVG логотип: Б + знак Wi-Fi -->
+        <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#2DD4BF"/><stop offset="1" stop-color="#60A5FA"/></linearGradient></defs>
+          <rect width="48" height="48" rx="10" fill="url(#g)"/>
+          <text x="24" y="18" font-size="14" text-anchor="middle" font-weight="800" fill="#02111a">Б</text>
+          <path d="M14 24c3-3 7-4.5 12-4.5" stroke="#02111a" stroke-opacity="0.55" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+          <circle cx="24" cy="32" r="2.8" fill="#02111a"/>
+        </svg>
+      </div>
+      <div>
+        <h1>Бека AI — умный помощник</h1>
+        <p class="sub">Отвечает на все вопросы по сети, сайтам, и не только. Цена базовой услуги 2000 ₸ — +7 775 502 6706</p>
+      </div>
+    </div>
+
+    <div class="actions">
+      <a class="btn" href="tel:+77755026706">📞 Позвонить</a>
+      <a class="btn" href="https://wa.me/77755026706">💬 WhatsApp</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- Left: чат + настройки -->
+    <section class="card chat-wrap" aria-label="AI Чат">
+      <div class="chat-header">
+        <div style="flex:1">
+          <div style="display:flex;gap:8px;align-items:center">
+            <strong>Бека AI</strong>
+            <span class="small" id="status">Режим: локальный</span>
+          </div>
+          <div class="small">System prompt: <span id="sysPreview">«Ты — умный помощник Беки, отвечай корректно и по делу»</span></div>
+        </div>
+        <div style="display:flex;gap:8px">
+          <select id="modelSelect" title="Модель">
+            <option value="local">Локальный (фоллбэк)</option>
+            <option value="gpt-4.1">GPT-4.1 (рекомендуется)</option>
+            <option value="gpt-4o">GPT-4o</option>
+            <option value="gpt-3.5-turbo">GPT-3.5-Turbo</option>
+          </select>
+          <button id="connect" class="btn">Подключить</button>
+        </div>
+      </div>
+
+      <div id="chatBody" class="chat-body" role="log" aria-live="polite">
+        <!-- messages go here -->
+      </div>
+
+      <div style="margin-top:8px">
+        <div style="display:flex;gap:8px;margin-bottom:8px">
+          <input id="proxyURL" placeholder="URL прокси (например https://my-proxy.example.com/api/chat)" style="flex:1" />
+          <button id="saveProxy" class="btn">Сохранить</button>
+        </div>
+
+        <div style="display:flex;gap:8px;align-items:flex-start">
+          <textarea id="prompt" placeholder="Напиши вопрос ассистенту..."></textarea>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <button id="send" class="btn">Отправить</button>
+            <button id="clear" class="btn">Очистить</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Right: услуги / инфо / системный prompt -->
+    <aside class="card">
+      <h3>О сервисе</h3>
+      <p class="small">AI-ассистент поможет подготовить чеклист настройки Wi-Fi, написать код страницы, составить текст для объявлений и ответить на любые технические вопросы.</p>
+
+      <div class="service-list">
+        <div class="card"><strong>Настройка Wi-Fi</strong><div class="small">2000 ₸</div></div>
+        <div class="card"><strong>Установка роутера</strong><div class="small">2000 ₸</div></div>
+        <div class="card"><strong>Создание сайта</strong><div class="small">2000 ₸</div></div>
+        <div class="card"><strong>Удалённая поддержка</strong><div class="small">2000 ₸</div></div>
+      </div>
+
+      <hr/>
+      <h4>System prompt (редактируемый)</h4>
+      <textarea id="systemPromptEditor" style="min-height:80px">Ты — ассистент Беки. Отвечай дружелюбно, кратко и профессионально. Помогай по настройке сетей, роутерам, созданию сайтов и общим IT-вопросам. Если не уверен — предложи чеклист и варианты решения.</textarea>
+      <div style="display:flex;gap:8px;margin-top:8px">
+        <button id="applySys" class="btn">Применить</button>
+        <button id="restore" class="btn">Восстановить дефолт</button>
+      </div>
+    </aside>
+  </main>
+
+  <footer>
+    <div class="small">© Бека — Тел/WhatsApp: +7 775 502 6706 · Цена: 2000 ₸</div>
+    <div class="small">Используй прокси-сервер для подключения OpenAI API (без ключа в браузере).</div>
+  </footer>
+</div>
+
+<script>
+/* ========== Frontend chat logic ========== */
+/* Хранение истории в localStorage, режимы локальный/remote, system prompt, модель */
+const chatBody = document.getElementById('chatBody');
+const sendBtn = document.getElementById('send');
+const clearBtn = document.getElementById('clear');
+const input = document.getElementById('prompt');
+const proxyInput = document.getElementById('proxyURL');
+const saveProxyBtn = document.getElementById('saveProxy');
+const statusEl = document.getElementById('status');
+const modelSelect = document.getElementById('modelSelect');
+const systemPromptEditor = document.getElementById('systemPromptEditor');
+const applySysBtn = document.getElementById('applySys');
+const sysPreview = document.getElementById('sysPreview');
+const connectBtn = document.getElementById('connect');
+
+let state = {
+  proxy: localStorage.getItem('beka_proxy') || '',
+  mode: localStorage.getItem('beka_mode') || 'local',
+  model: localStorage.getItem('beka_model') || 'local',
+  systemPrompt: localStorage.getItem('beka_system') || systemPromptEditor.value,
+  history: JSON.parse(localStorage.getItem('beka_history') || '[]'),
+  connected: false
+};
+
+proxyInput.value = state.proxy;
+modelSelect.value = state.model;
+systemPromptEditor.value = state.systemPrompt;
+sysPreview.textContent = state.systemPrompt;
+statusEl.textContent = state.connected ? 'Режим: remote' : 'Режим: локальный';
+
+function renderHistory(){
+  chatBody.innerHTML = '';
+  if(state.history.length===0) {
+    addAssistant("Привет! Я ассистент Беки. Напиши вопрос — помогу с сетью, сайтом и техникой.");
+    return;
+  }
+  for(const m of state.history){
+    addBubble(m.role === 'user' ? m.text : m.text, m.role === 'user' ? 'user' : 'assistant', false);
+  }
+  chatBody.scrollTop = chatBody.scrollHeight;
+}
+function addBubble(text, cls='assistant', save=true){
+  const el = document.createElement('div');
+  el.className = 'msg ' + (cls==='user' ? 'user' : 'assistant');
+  el.textContent = text;
+  chatBody.appendChild(el);
+  chatBody.scrollTop = chatBody.scrollHeight;
+  if(save){
+    state.history.push({role: cls==='user' ? 'user' : 'assistant', text});
+    localStorage.setItem('beka_history', JSON.stringify(state.history));
+  }
+}
+function addAssistant(text){ addBubble(text,'assistant'); }
+function addUser(text){ addBubble(text,'user'); }
+
+function localReply(q){
+  const t = q.toLowerCase();
+  if(t.includes('wifi')||t.includes('wi-fi')||t.includes('роут')) {
+    return "Чеклист для настройки Wi-Fi:\n• Проверить питание и кабель провайдера\n• Обновить канал (1/6/11) и установить WPA2/3 пароль\n• Настроить гостевую сеть и QoS при необходимости\n• Проверить покрытие и при необходимости переместить роутер.\nЕсли назовёшь модель роутера — пришлю точные шаги.";
+  }
+  if(t.includes('сайт')||t.includes('лендинг')) {
+    return "Чтобы сделать лендинг: 1) Цель и заголовок 2) 3 фото/контент 3) Контактная кнопка 4) Быстрая форма. Могу сгенерировать HTML/CSS прямо сейчас.";
+  }
+  return "Я готов помочь — задай конкретный вопрос по сети, роутеру или сайту. Могу прислать чеклист, код или инструкции для телефона/PC.";
+}
+
+// Save proxy
+saveProxyBtn.addEventListener('click', ()=> {
+  state.proxy = proxyInput.value.trim();
+  localStorage.setItem('beka_proxy', state.proxy);
+  alert('Proxy URL сохранён (не забудь развернуть сервер с OPENAI ключом).');
+});
+
+// apply system prompt
+applySysBtn.addEventListener('click', ()=>{
+  state.systemPrompt = systemPromptEditor.value;
+  sysPreview.textContent = state.systemPrompt;
+  localStorage.setItem('beka_system', state.systemPrompt);
+  alert('System prompt применён.');
+});
+
+// connect / disconnect (connect simply toggles connected mode)
+connectBtn.addEventListener('click', ()=>{
+  if(!state.connected){
+    if(!state.proxy){ alert('Сначала укажи URL прокси и нажми Сохранить.'); return; }
+    state.connected = true; statusEl.textContent = 'Режим: remote'; connectBtn.textContent = 'Отключить';
+  } else {
+    state.connected = false; statusEl.textContent = 'Режим: локальный'; connectBtn.textContent = 'Подключить';
+  }
+});
+
+modelSelect.addEventListener('change', ()=> {
+  state.model = modelSelect.value;
+  localStorage.setItem('beka_model', state.model);
+});
+
+// send message
+async function send(){
+  const text = input.value.trim();
+  if(!text) return;
+  addUser(text);
+  input.value = '';
+  // placeholder while waiting
+  const placeholder = document.createElement('div'); placeholder.className='msg assistant'; placeholder.textContent = '...';
+  chatBody.appendChild(placeholder); chatBody.scrollTop = chatBody.scrollHeight;
+
+  if(state.connected && state.proxy && state.model !== 'local'){
+    // remote call to proxy
+    try {
+      const payload = {
+        model: state.model,
+        system: state.systemPrompt,
+        messages: [{role:'user', content: text}],
+        history: state.history.slice(-8) // last messages for context
+      };
+      const res = await fetch(state.proxy, {
+        method:'POST',
+        headers:{ 'Content-Type':'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if(!res.ok){
+        const t = await res.text();
+        placeholder.textContent = 'Ошибка сервера: ' + res.status + ' — ' + t;
+        return;
+      }
+      const j = await res.json();
+      const reply = j.reply || j.choices?.[0]?.message?.content || JSON.stringify(j);
+      placeholder.textContent = reply;
+      // save assistant reply
+      state.history.push({role:'user', text}); state.history.push({role:'assistant', text:reply});
+      localStorage.setItem('beka_history', JSON.stringify(state.history));
+    } catch(err){
+      placeholder.textContent = 'Ошибка подключения к прокси: ' + err.message + '. Использую локальную подсказку.';
+      const fallback = localReply(text);
+      addAssistant(fallback);
+    }
+  } else {
+    // local fallback
+    placeholder.textContent = localReply(text);
+    state.history.push({role:'user', text}); state.history.push({role:'assistant', text:placeholder.textContent});
+    localStorage.setItem('beka_history', JSON.stringify(state.history));
+  }
+}
+
+// clear
+clearBtn.addEventListener('click', ()=> {
+  if(confirm('Очистить историю чата?')){
+    state.history = []; localStorage.removeItem('beka_history'); chatBody.innerHTML=''; renderHistory();
+  }
+});
+
+sendBtn.addEventListener('click', send);
+input.addEventListener('keydown', (e)=> { if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); send(); } });
+
+// initial render
+renderHistory();
+</script>
+</body>
+</html>

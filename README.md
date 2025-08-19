@@ -1,2 +1,0 @@
-# beka-ai
-Ai beka
